@@ -1,0 +1,150 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#DCEDC8"
+    android:fitsSystemWindows="true"
+    tools:context="com.aboelyan.sha.mshaweerak.Shofiers.RegisterShofiers">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:paddingTop="56dp">
+
+
+
+        <!-- Name Label -->
+
+        <!-- Address Label -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/whitebackground">
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/reg_usernamSh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="username"
+                app:backgroundTint="#CCFF90"
+                android:textColorHint="#CCFF90"
+                android:inputType="textPostalAddress" />
+        </android.support.design.widget.TextInputLayout>
+
+
+        <!--  Email Label -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/whitebackground">
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/ModelCarSh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="موديل السياره"
+                app:backgroundTint="#CCFF90"
+                android:textColorHint="#CCFF90" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/whitebackground">
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/phoneSh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Phone"
+                app:backgroundTint="#CCFF90"
+                android:textColorHint="#CCFF90"
+                android:inputType="phone" />
+        </android.support.design.widget.TextInputLayout>
+
+
+        <!-- Password Label -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/whitebackground">
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/reg_passwordSh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                app:backgroundTint="#CCFF90"
+                android:textColorHint="#CCFF90"
+                android:inputType="textPassword" />
+        </android.support.design.widget.TextInputLayout>
+
+        <!-- Password Re-enter Label -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/whitebackground">
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/reg_confirmpassSh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Re-enter Password"
+                app:backgroundTint="#CCFF90"
+                android:textColorHint="#CCFF90"
+                android:inputType="textPassword" />
+        </android.support.design.widget.TextInputLayout>
+        <TextView
+            android:id="@+id/car_kindSh"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/whitebackground"
+            android:text="اختر نوع السياره" />
+
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinnerSh" />
+
+
+        <!-- Signup Button -->
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_signupSh"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:layout_marginTop="24dp"
+            android:padding="12dp"
+            android:text="Create Account"
+            android:background="@drawable/light_green_background"/>
+
+        <TextView
+            android:id="@+id/link_loginSh"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:gravity="center"
+            android:text="Already a member? Login"
+            android:textSize="16dip" />
+
+
+    </LinearLayout>
+</ScrollView>
+
