@@ -1,25 +1,13 @@
 package com.aboelyan.sha.mshaweerak.FirbaseNotfication;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.BitmapFactory;
-import android.media.RingtoneManager;
-import android.net.Uri;
-import android.support.v4.app.NotificationCompat;
-
-import com.aboelyan.sha.mshaweerak.R;
-
-/**
+        /**
  * Created by Administrator on 05/07/2017.
  */
 
 public class MyNotficationManager {
 
-    private Context ctx;
-    public static final int NOTFICATIN_ID=234;
+  /*  private Context ctx;
+    public static final int NOTFICATIN_ID=0;
 
     public MyNotficationManager(Context ctx) {
         this.ctx = ctx;
@@ -51,5 +39,5 @@ public class MyNotficationManager {
         notificationManager.notify(NOTFICATIN_ID,mNotification);
 
 
-    }
+    }*/
 }

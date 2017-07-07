@@ -6,17 +6,17 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.aboelyan.sha.mshaweerak.FirbaseNotfication.SharedprefManager;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -61,13 +61,16 @@ public class UseRegestraion extends AppCompatActivity {
 
 
 
-                                        FirebaseMessaging.getInstance().subscribeToTopic("test");
+                                      //  FirebaseMessaging.getInstance().subscribeToTopic("test");
 
                                          Toast.makeText(UseRegestraion.this,TOKEN,Toast.LENGTH_LONG).show();
                                           Phones = Phone.getText().toString().trim();
                                           username = UserName.getText().toString();
                                           password = Password.getText().toString();
-                                          TOKEN=SharedprefManager.getIstance(getApplicationContext()).getToken();
+                                          TOKEN = FirebaseInstanceId.getInstance().getToken();
+                                          Log.e(TOKEN,"Tokenis");
+
+                                          Toast.makeText(UseRegestraion.this,TOKEN,Toast.LENGTH_LONG).show();
                                           confirmpassword = ConfirmPassword.getText().toString();
                                           if ( Phones.equals("") || username.equals("") || password.equals("") || confirmpassword.equals("")) {
                                               builder.setTitle("something went wrong .....");
@@ -79,7 +82,7 @@ public class UseRegestraion extends AppCompatActivity {
                                                   builder.setMessage("not correct");
                                                   diplayAlert("input_error");
                                               } else {
-                                                  if(SharedprefManager.getIstance(UseRegestraion.this).getToken()!=null) {
+                                               //   if(SharedprefManager.getIstance(UseRegestraion.this).getToken()!=null) {
 
                                                   StringRequest stringRequest = new StringRequest(Request.Method.POST, reg_url,
                                                           new Response.Listener<String>() {
@@ -105,7 +108,8 @@ public class UseRegestraion extends AppCompatActivity {
                                                           params.put("phone", Phones);
                                                           params.put("username", username);
                                                           params.put("password", password);
-                                                          params.put("token",TOKEN);
+                                                          params.put("token",TOKEN);//هذا التوكن اللس كان مبعوت هناك في السيرفر تفضل كمل
+
 
                                                           return params;
                                                       }
@@ -116,7 +120,7 @@ public class UseRegestraion extends AppCompatActivity {
                                           }
 
                                       }
-                                  }}
+                                  }
         );
     }
 

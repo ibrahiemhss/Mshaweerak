@@ -1,15 +1,12 @@
 package com.aboelyan.sha.mshaweerak.FirbaseNotfication;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-
 /**
  * Created by Administrator on 04/07/2017.
  */
 
 public class SharedprefManager {
 
-    private static final String SHARED_PREF_NAME="fcmshared";
+   /* private static final String SHARED_PREF_NAME="fcmshared";
     private static final String KEY_ACCESS_TOKEN="token";
 
     private static Context mCTX;
@@ -37,5 +34,5 @@ public class SharedprefManager {
         SharedPreferences sharedPreferences=mCTX.getSharedPreferences(SHARED_PREF_NAME,Context.MODE_PRIVATE);
         return sharedPreferences.getString(KEY_ACCESS_TOKEN,null);
 
-    }
+    }*/
 }

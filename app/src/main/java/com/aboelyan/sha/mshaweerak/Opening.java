@@ -3,17 +3,14 @@ package com.aboelyan.sha.mshaweerak;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aboelyan.sha.mshaweerak.Booking.Bookings;
-import com.aboelyan.sha.mshaweerak.FirbaseNotfication.FCMInstanceIdService;
-import com.aboelyan.sha.mshaweerak.FirbaseNotfication.SharedprefManager;
+import com.aboelyan.sha.mshaweerak.FCMH.FCMRegistrationService;
 
 public class Opening extends AppCompatActivity {
 
@@ -30,7 +27,7 @@ public class Opening extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_opening);
         textView= (TextView) findViewById(R.id.textView3);
-
+/*
         broadcastReceiver=new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -44,7 +41,9 @@ public class Opening extends AppCompatActivity {
 
         }
 
-        registerReceiver(broadcastReceiver,new IntentFilter(FCMInstanceIdService.TOKEN_BROADCAST));
+        registerReceiver(broadcastReceiver,new IntentFilter(FCMInstanceIdService.TOKEN_BROADCAST));*/
+        startService(new Intent(this,FCMRegistrationService.class));
+
         pref = getSharedPreferences("Login2.conf", Context.MODE_PRIVATE);
         user_name = pref.getString("username","" );
         password = pref.getString("password", "");

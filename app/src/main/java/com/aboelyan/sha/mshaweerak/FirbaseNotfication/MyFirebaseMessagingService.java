@@ -1,17 +1,10 @@
 package com.aboelyan.sha.mshaweerak.FirbaseNotfication;
 
-import android.content.Intent;
-import android.util.Log;
-
-import com.aboelyan.sha.mshaweerak.Opening;
-import com.google.firebase.messaging.FirebaseMessagingService;
-import com.google.firebase.messaging.RemoteMessage;
-
 /**
  * Created by Administrator on 05/07/2017.
  */
 
-public class MyFirebaseMessagingService extends FirebaseMessagingService {
+public class MyFirebaseMessagingService {/*extends FirebaseMessagingService {
 
     public static final String TAG="FcmExampleMessage";
     private MyNotficationManager myNotficationManager;
@@ -31,5 +24,5 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
          myNotficationManager=new MyNotficationManager(getApplicationContext());
         myNotficationManager.showNotfication(from,notfication,new Intent(getApplicationContext(),Opening.class));
 
-    }
+    }*/
 }

@@ -27,18 +27,24 @@
         <activity android:name=".Shofiers.LogInShofiers" />
         <activity android:name=".RecyclerVeiwShofiers.ListOfBookings" />
         <service
-            android:name=".FirbaseNotfication.FCMInstanceIdService">
+            android:name=".FCMH.MyFCMService"
+            android:exported="false">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
-            </intent-filter>
-        </service>
-        <service
-            android:name=".FirbaseNotfication.MyFirebaseMessagingService">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
+        <!--###  Register service get token and send it to service  ###-->
+        <service android:name=".FCMH.FCMRegistrationService" />
+
+        <!--###  Service response to token refresh event  ###-->
+        <service
+            android:name=".FCMH.FCMTokenRefreshListenerService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
         <activity android:name=".MainActivity"></activity>
     </application>
 
