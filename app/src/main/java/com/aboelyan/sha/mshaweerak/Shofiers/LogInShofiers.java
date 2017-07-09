@@ -23,6 +23,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,7 +40,7 @@ public class LogInShofiers extends AppCompatActivity {
     TextView register_Sh;
     String username;
     String password;
-    String sh_id, car_id,name;
+    String sh_id, car_id,name,TOKEN;
     AlertDialog.Builder builder;
     SharedPreferences prefsh, NatficationName;
     AppCompatButton login_Sh;
@@ -70,6 +71,8 @@ public class LogInShofiers extends AppCompatActivity {
         login_Sh.setOnClickListener(new View.OnClickListener() {
                                            @Override
                                            public void onClick(final View v) {
+                                               TOKEN = FirebaseInstanceId.getInstance().getToken();
+                                               Log.e(TOKEN,"Tokenis");
                                                username = username_Sh.getText().toString();
                                                password = password_Sh.getText().toString();
                                                if (username.equals("") || password.equals("")) {
@@ -91,7 +94,7 @@ public class LogInShofiers extends AppCompatActivity {
                                                                        editorsh.putString("username", jsonObject.getString("username"));
 
                                                                        Log.d(response,"response");
-                                                                       editorsh.commit();
+                                                                      editorsh.commit();
                                                                        String code = jsonObject.getString("code");
                                                                        if (code.equals("login_failed")) {
                                                                            builder.setTitle("Login Error");
@@ -120,6 +123,7 @@ public class LogInShofiers extends AppCompatActivity {
                                                            Map<String, String> params = new HashMap<String, String>();
                                                            params.put("username", username);
                                                            params.put("password", password);
+                                                          params.put("token",TOKEN);
 
                                                            return params;
                                                        }

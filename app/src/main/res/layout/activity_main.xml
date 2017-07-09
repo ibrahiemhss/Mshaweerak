@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="#DCEDC8"
     android:fitsSystemWindows="true"
-    tools:context="com.aboelyan.sha.mshaweerak.MainActivity">
+    tools:context="com.aboelyan.sha.mshaweerak.Clients.LogInUsers">
 
 
     <LinearLayout

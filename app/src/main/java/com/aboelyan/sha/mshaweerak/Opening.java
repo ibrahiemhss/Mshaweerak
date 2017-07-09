@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aboelyan.sha.mshaweerak.Booking.Bookings;
+import com.aboelyan.sha.mshaweerak.Clients.LogInUsers;
 import com.aboelyan.sha.mshaweerak.FCMH.FCMRegistrationService;
 
 public class Opening extends AppCompatActivity {
@@ -47,8 +48,9 @@ public class Opening extends AppCompatActivity {
         pref = getSharedPreferences("Login2.conf", Context.MODE_PRIVATE);
         user_name = pref.getString("username","" );
         password = pref.getString("password", "");
-        editor = pref.edit();
         id= pref.getString("id", "id");
+
+        editor = pref.edit();
         Toast.makeText(this,user_name+" "+password+" "+id,Toast.LENGTH_LONG).show();
 
 
@@ -56,13 +58,13 @@ public class Opening extends AppCompatActivity {
         if(user_name.equals("")||password.equals("")){
 
             Toast.makeText(this,"من فضلك قم بالتسجيل",Toast.LENGTH_LONG).show();
-            startActivity(new Intent(Opening.this, MainActivity.class));
+            startActivity(new Intent(Opening.this, LogInUsers.class));
 
         }else {
             Intent intent = new Intent(Opening.this, Bookings.class);
             Bundle bundle = new Bundle();
             bundle.putString("username",user_name );
-            bundle.putString("id", id);
+          //  bundle.putString("id", id);
             intent.putExtras(bundle);
             startActivity(intent);
 

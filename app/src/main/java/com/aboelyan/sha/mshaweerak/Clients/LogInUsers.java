@@ -1,4 +1,4 @@
-package com.aboelyan.sha.mshaweerak;
+package com.aboelyan.sha.mshaweerak.Clients;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -15,7 +15,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aboelyan.sha.mshaweerak.Booking.Bookings;
+import com.aboelyan.sha.mshaweerak.Mysingletone;
+import com.aboelyan.sha.mshaweerak.R;
 import com.aboelyan.sha.mshaweerak.Shofiers.LogInShofiers;
+import com.aboelyan.sha.mshaweerak.UseRegestraion;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -30,7 +33,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity /*implements CompoundButton.OnCheckedChangeListener*/ {
+public class LogInUsers extends AppCompatActivity /*implements CompoundButton.OnCheckedChangeListener*/ {
 
     private final static String LOGIN_URL = "http://devsinai.com/mashaweer/login.php";
     EditText editTextUsername;
@@ -69,13 +72,13 @@ public class MainActivity extends AppCompatActivity /*implements CompoundButton.
         txtrRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               startActivity(new Intent(MainActivity.this, UseRegestraion.class));
+               startActivity(new Intent(LogInUsers.this, UseRegestraion.class));
             }
         });
         registerSh_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, LogInShofiers.class));
+                startActivity(new Intent(LogInUsers.this, LogInShofiers.class));
             }
         });
         buttonLogin.setOnClickListener(new View.OnClickListener() {
@@ -100,10 +103,10 @@ public class MainActivity extends AppCompatActivity /*implements CompoundButton.
 
 
 
-                                                                       editor.putString("username", username);
                                                                        editor.putString("password", password);
                                                                        editor.putString("id", jsonObject.getString("id"));
                                                                        editor.putString("username", username);
+                                                                       editor.putString("id", jsonObject.getString("id"));
 
                                                                        Log.v(response,"respons"+ "username"  + username + "password" + password);
 
@@ -114,14 +117,13 @@ public class MainActivity extends AppCompatActivity /*implements CompoundButton.
                                                                            builder.setTitle("Login Error");
                                                                            desplayalert(jsonObject.getString("message"));
                                                                        } else {
-                                                                          Intent intent = new Intent(MainActivity.this, Bookings.class);
+                                                                          Intent intent = new Intent(LogInUsers.this, Bookings.class);
                                                                            Bundle bundle = new Bundle();
-                                                                           bundle.putString("username",user_name );
-                                                                           bundle.putString("id", id);
+                                                                           bundle.putString("username",username );
                                                                          intent.putExtras(bundle);
                                                                           startActivity(intent);
-                                                                           Toast.makeText(MainActivity.this,id,Toast.LENGTH_LONG).show();
-                                                                           Toast.makeText(MainActivity.this, user_name, Toast.LENGTH_LONG).show();
+                                                                           Toast.makeText(LogInUsers.this,id,Toast.LENGTH_LONG).show();
+                                                                           Toast.makeText(LogInUsers.this, user_name, Toast.LENGTH_LONG).show();
 
                                                                        }
                                                                    } catch (JSONException e) {
@@ -132,7 +134,7 @@ public class MainActivity extends AppCompatActivity /*implements CompoundButton.
                                                            }, new Response.ErrorListener() {
                                                        @Override
                                                        public void onErrorResponse(VolleyError error) {
-                                                           Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_LONG).show();
+                                                           Toast.makeText(LogInUsers.this, "Error", Toast.LENGTH_LONG).show();
                                                            VolleyLog.e("Error: ", error.getMessage());
                                                            error.printStackTrace();
 
@@ -149,7 +151,7 @@ public class MainActivity extends AppCompatActivity /*implements CompoundButton.
                                                            return params;
                                                        }
                                                    };
-                                                   Mysingletone.getInstance(MainActivity.this).addToRequestque(stringRequest);
+                                                   Mysingletone.getInstance(LogInUsers.this).addToRequestque(stringRequest);
                                                }
                                            }
                                        }

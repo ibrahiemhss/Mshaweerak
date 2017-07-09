@@ -3,6 +3,7 @@ package com.aboelyan.sha.mshaweerak.Booking;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import com.aboelyan.sha.mshaweerak.Mysingletone;
 import com.aboelyan.sha.mshaweerak.R;
+import com.aboelyan.sha.mshaweerak.RecyclerViewClients.ListDesplayForClient;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -41,13 +43,13 @@ public class Bookings extends AppCompatActivity implements AdapterView.OnItemSel
     AppCompatButton btn_Book;
     SharedPreferences pref,pref2;
     SharedPreferences.Editor editor,editor2;
-    private String pushNotificationsBooking = "http://devsinai.com/mashaweer/messages/pushBook_messags.php";
+    private String pushNotificationsBooking = "http://devsinai.com/mashaweer/messages/pushBook.php";
 
     String Url_Book="http://devsinai.com/mashaweer/insert_booking.php";
     String FACE,TIME,PHONE;
     AlertDialog.Builder builder;
 
-    String id_user,caaaar;
+    String id_user,username;
 
     TextView viewname,vieweId;
 
@@ -69,17 +71,27 @@ public class Bookings extends AppCompatActivity implements AdapterView.OnItemSel
 
         builder = new AlertDialog.Builder(this);
 
-       Bundle bundle = getIntent().getExtras();
+       final Bundle bundle = getIntent().getExtras();
        viewname.setText("الاسم : " + bundle.getString("username"));
-       vieweId.setText("الرقم  : " + bundle.getString("id"));
+      // vieweId.setText("الرقم  : " + bundle.getString("id"));
+
+
 
 
         pref = getSharedPreferences("Login2.conf", Context.MODE_PRIVATE);
+        username = pref.getString("username","" );
+        id_user= pref.getString("id", "id");
+
+        editor = pref.edit();
+       // Toast.makeText(this,user_name+" "+password+" "+id,Toast.LENGTH_LONG).show();
+
+        pref = getSharedPreferences("Login2.conf", Context.MODE_PRIVATE);
        id_user = pref.getString("id", "id");
+        username= pref.getString("username", "username");
         editor = pref.edit();
 
         pref2 = getSharedPreferences("myPrefs", MODE_PRIVATE);
-        caaaar=pref2.getString("car_id","car_id");
+        username=pref2.getString("car_id","car_id");
         editor2=pref2.edit();
 
         selection = (TextView) findViewById(R.id.car_kind);
@@ -93,62 +105,85 @@ public class Bookings extends AppCompatActivity implements AdapterView.OnItemSel
         aa.setDropDownViewResource(
                 android.R.layout.simple_spinner_dropdown_item);
         spin.setAdapter(aa);
-
+        Toast.makeText(Bookings.this,carstype+"  "+username, Toast.LENGTH_LONG).show();
 
 
         btn_Book. setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                NotficationOfBook();
-                Toast.makeText(Bookings.this,carstype+"  "+id_user, Toast.LENGTH_LONG).show();
-
                 FACE=face.getText().toString();
                 TIME=Time.getText().toString();
 
 
+                Toast.makeText(Bookings.this,carstype, Toast.LENGTH_LONG).show();
 
 
                 if(FACE.equals("")||TIME.equals("")){
                     builder.setTitle("somthing wrong");
                     desplayalert("Enter a valid username and password");
-                }
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, Url_Book,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                try {
-                                    JSONObject jsonObject = new JSONObject(response);
+                }else {
 
-                                    String Response = jsonObject.getString("response");
+                    builder.setTitle("Confirm Delete...");
+                    builder.setMessage("هل انت فعلا تريد الحجز");
+                    builder.setPositiveButton("نعم الحجز الان", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
 
 
-                                    Log.v(response,"responsssss");
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
+                            StringRequest stringRequest = new StringRequest(Request.Method.POST, Url_Book,
+                                    new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            try {
+                                                JSONObject jsonObject = new JSONObject(response);
+
+                                                String Response = jsonObject.getString("response");
+
+
+                                                Log.v(response,"responsssss");
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+
                                 }
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+                            }) {
+                                @Override
+                                protected Map<String, String> getParams() throws AuthFailureError {
 
-                    }
-                }) {
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-
-                        Map<String, String> params = new HashMap<String, String>();
-                        params.put("face", FACE);
-                        params.put("traveTime", TIME);
-                        params.put("user_id", id_user);
-                        params.put("car_id", carstype);
+                                    Map<String, String> params = new HashMap<String, String>();
+                                    params.put("face", FACE);
+                                    params.put("traveTime", TIME);
+                                    params.put("user_id", id_user);
+                                    params.put("car_id", carstype);
 
 
-                        return params;
-                    }
-                };
-                Mysingletone.getInstance(Bookings.this).addToRequestque(stringRequest);
-               // NotficationOfBook();
+                                    return params;
+                                }
+                            };
+                            Mysingletone.getInstance(Bookings.this).addToRequestque(stringRequest);
+                            NotficationOfBook();
+
+                            Intent i=new Intent(Bookings.this, ListDesplayForClient.class);
+                            startActivity(i);
+
+                        }
+                    });
+                    builder.setNegativeButton("لا خروج", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+
+                        }
+
+                    });
+                    builder.show();
+                } //=====ende else=========
+
+
+
 
             };
 
@@ -208,6 +243,9 @@ public class Bookings extends AppCompatActivity implements AdapterView.OnItemSel
 
                             String Response = jsonObject.getString("response");
 
+                            Log.d("responsey", Response);
+
+
 
 
                         } catch (JSONException e) {
@@ -228,14 +266,9 @@ public class Bookings extends AppCompatActivity implements AdapterView.OnItemSel
                 Map<String, String> params = new HashMap<>();
 
 
-               // params.put("id_user", id_user);            // Add this line to send USER ID to server
-                //params.put("user_name",caaaar);
+                params.put("username", username);            // Add this line to send USER ID to server
+                params.put("car_id",carstype);
 
-
-
-                {
-
-                }
 
                 return params;
             }

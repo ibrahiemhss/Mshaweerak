@@ -35,7 +35,7 @@ public class ShAdapter extends RecyclerView.Adapter<ShAdapter.MyHolder> {
 
     @Override
     public MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_booking, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_shofiers, parent, false);
         view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT));
 
         MyHolder holder = new MyHolder(view);
@@ -44,12 +44,12 @@ public class ShAdapter extends RecyclerView.Adapter<ShAdapter.MyHolder> {
 
     @Override
     public void onBindViewHolder(MyHolder holder, int position) {
-        BookModels comments = bookModelses.get(position);
+        BookModels SH = bookModelses.get(position);
 
-        holder.whereFace.setText(comments.getFace());
-        holder.traveTimeBB.setText(comments.getTraveTime());
-        holder.user_id.setText(comments.getUser_id());
-        holder.car_id.setText(comments.getCar_id());
+        holder.whereFace.setText(SH.getFace());
+        holder.traveTimeBB.setText(SH.getTraveTime());
+        holder.user_id.setText(SH.getUser_id());
+        holder.car_id.setText(SH.getCar_id());
     }
     @Override
     public int getItemCount()

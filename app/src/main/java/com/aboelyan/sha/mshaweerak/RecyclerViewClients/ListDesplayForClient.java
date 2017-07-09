@@ -1,7 +1,6 @@
-package com.aboelyan.sha.mshaweerak.RecyclerVeiwShofiers;
+package com.aboelyan.sha.mshaweerak.RecyclerViewClients;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.aboelyan.sha.mshaweerak.R;
 import com.android.volley.AuthFailureError;
@@ -31,47 +29,47 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ListOfBookings extends AppCompatActivity {
+public class ListDesplayForClient extends AppCompatActivity  {
 
-    RecyclerView RS_BookingSh;
-    private ShAdapter adapter;
+
+    RecyclerView Desplay_Shofires_For_Clients;
+    private ClientAdapter adapter;
     private RequestQueue mRequestQueue;
-    private List<BookModels> bookModelses1 ;
+    private List<ClientsModel> clientsModels ;
     private ProgressDialog pd;
-    SharedPreferences prefComment,pref,prefsh;
-    SharedPreferences.Editor editorsh,editor;
+    SharedPreferences pref2,pref,prefsh;
+    SharedPreferences.Editor editorsh,editor,editor2;
     private JsonArrayRequest jsonArrayRequest;
+
     RecyclerView.LayoutManager recyclerViewlayoutManager;
     RecyclerView.Adapter  recyclerViewadapter;
     private RequestQueue requestQueue;
-    String urlListBokings = "http://devsinai.com/mashaweer/show.php";
-    String car_id;
+    String urlListDesplayShForClient = "http://devsinai.com/mashaweer/ListDesplayForClient.php";
+    String car_id,cr_id;
     ProgressBar progressBar;
-
-    final String TAAG=this.getClass().getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_of_bookings);
-        bookModelses1=new ArrayList<>();
-        RS_BookingSh = (RecyclerView) findViewById(R.id.show_BookingSh);
-        RS_BookingSh.setHasFixedSize(true);
+        setContentView(R.layout.activity_list_desplay_for_client);
+        clientsModels=new ArrayList<>();
+        Desplay_Shofires_For_Clients = (RecyclerView) findViewById(R.id.Desplay_Shofires_For_Clients);
+        Desplay_Shofires_For_Clients.setHasFixedSize(true);
         recyclerViewlayoutManager = new LinearLayoutManager(this);
-        RS_BookingSh.setLayoutManager(recyclerViewlayoutManager);
-        recyclerViewadapter = new ShAdapter(bookModelses1,this);
-        RS_BookingSh.setAdapter(recyclerViewadapter);
+        Desplay_Shofires_For_Clients.setLayoutManager(recyclerViewlayoutManager);
+        recyclerViewadapter = new ClientAdapter(clientsModels,this);
+        Desplay_Shofires_For_Clients.setAdapter(recyclerViewadapter);
 
 
-        prefsh = getSharedPreferences("Loginsh.shofier", Context.MODE_PRIVATE);
-        car_id = prefsh.getString("car_id","");
 
-        editorsh = prefsh.edit();
+        pref2 = getSharedPreferences("myPrefs", MODE_PRIVATE);
+        cr_id=pref2.getString("car_id","car_id");
+        editor2=pref2.edit();
 
-
-        Toast.makeText(this, car_id, Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this, car_id+"A"+"           "+cr_id+"B", Toast.LENGTH_SHORT).show();
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar1);
+
 
 
         JSON_DATA_WEB_CALL();
@@ -80,14 +78,17 @@ public class ListOfBookings extends AppCompatActivity {
 
 
 
-  public void JSON_DATA_WEB_CALL() {
-        StringRequest stringRequest=new StringRequest(Request.Method.POST, urlListBokings,
+    public void JSON_DATA_WEB_CALL() {
+        StringRequest stringRequest=new StringRequest(Request.Method.POST, urlListDesplayShForClient,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
 
+
                         try {
                             JSONArray jsonArray=new JSONArray(response);
+                            progressBar.setVisibility(View.GONE);
+
                             JSON_PARSE_DATA_AFTER_WEBCALL(jsonArray);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -107,7 +108,7 @@ public class ListOfBookings extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String,String> params=new HashMap<String, String>();
-                params.put("car_id", car_id);
+                params.put("car_id", cr_id);
 
 
                 return params;
@@ -117,40 +118,39 @@ public class ListOfBookings extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(this);
 
         requestQueue.add(stringRequest);
-      progressBar.setVisibility(View.GONE);
 
-  }
+    }
 
 
     public void JSON_PARSE_DATA_AFTER_WEBCALL(JSONArray array){
 
         for(int i = 0; i<array.length(); i++) {
 
-            BookModels bookModels2 = new BookModels();
+            ClientsModel clientsModel2 = new ClientsModel();
 
             JSONObject json = null;
             try {
                 json = array.getJSONObject(i);
-                progressBar.setVisibility(View.VISIBLE);
 
-                bookModels2.setFace(json.getString("face"));
+                clientsModel2.setNAME(json.getString("username"));
 
-                bookModels2.setTraveTime(json.getString("traveTime"));
+                clientsModel2.setPHONE(json.getString("phone"));
+                clientsModel2.setMODEL_CAR(json.getString("model_car"));
 
-               // bookModels2.setUser_id(json.getString("user_id"));
+                // bookModels2.setUser_id(json.getString("user_id"));
 
-              //  bookModels2.setCar_id(json.getString("car_id"));
+                //  bookModels2.setCar_id(json.getString("car_id"));
                 Log.v(String.valueOf(json),"oioiiooo");
             } catch (JSONException e) {
 
                 e.printStackTrace();
             }
-            bookModelses1.add(bookModels2);
+            clientsModels.add(clientsModel2);
         }
 
-        recyclerViewadapter = new ShAdapter(bookModelses1,this);
+        recyclerViewadapter = new ClientAdapter(clientsModels,this);
 
-        RS_BookingSh.setAdapter(recyclerViewadapter);
+        Desplay_Shofires_For_Clients.setAdapter(recyclerViewadapter);
 
 
 
