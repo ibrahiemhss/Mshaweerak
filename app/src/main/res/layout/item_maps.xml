@@ -27,45 +27,45 @@
                 android:layout_height="wrap_content"
                 />
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginTop="1dp">
-
                 <LinearLayout
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical|center_horizontal">
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="1dp">
+
                     <LinearLayout
+                        android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginTop="10dp">
-
-                        <TextView
-                            android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal">
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Ravindra Kumar"
-                            android:id="@+id/ShName"
-                            android:textColor="#53827d"
-                            android:textSize="14dp" />
-                        <TextView
-                            android:layout_weight="1"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="   الاسم   "
-                            android:textColor="#53827d"
-                            android:textSize="14dp" />
+                            android:orientation="horizontal"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp">
+
+                            <TextView
+                                android:layout_weight="1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Ravindra Kumar"
+                                android:id="@+id/ShName"
+                                android:textColor="#53827d"
+                                android:textSize="14dp" />
+                            <TextView
+                                android:layout_weight="1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="   الاسم   "
+                                android:textColor="#53827d"
+                                android:textSize="14dp" />
 
 
-                    </LinearLayout>
+                        </LinearLayout>
                     <LinearLayout
                         android:orientation="vertical"
                         android:layout_width="match_parent"

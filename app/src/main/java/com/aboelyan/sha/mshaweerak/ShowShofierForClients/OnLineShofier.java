@@ -128,10 +128,15 @@ public class OnLineShofier  extends FragmentActivity implements
                 mMap.addMarker(currentUserLocation);
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentUserLatLang, 16));
 
+                //=============================
+
+                // Starting locations retrieve task
+            }
+//====================================
             }
         }
 
-    }
+
 
     @Override
     public void onConnectionSuspended(int i) {
@@ -152,7 +157,7 @@ public class OnLineShofier  extends FragmentActivity implements
         }
     }
 
-
+//=============================================
     private void showGPSDisabledAlertToUser() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage("GPS is disabled in your device. Would you like to enable it?")
@@ -174,5 +179,4 @@ public class OnLineShofier  extends FragmentActivity implements
         AlertDialog alert = alertDialogBuilder.create();
         alert.show();
     }
-
 }
