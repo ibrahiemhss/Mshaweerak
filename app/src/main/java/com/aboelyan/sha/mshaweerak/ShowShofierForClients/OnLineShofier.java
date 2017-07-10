@@ -89,8 +89,8 @@ public class OnLineShofier  extends FragmentActivity implements
                             for(int i=0; i < jsonArray.length(); i++){
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                                 latitude = jsonObject.optDouble("latitude");
-                                 longitude = jsonObject.optDouble("longitude");
+                                 latitude = Double.parseDouble(jsonObject.optString("latitude").toString());
+                                 longitude = Double.parseDouble(jsonObject.optString("longitude").toString());
 
                             }
 
