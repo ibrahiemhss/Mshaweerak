@@ -1,17 +1,23 @@
 package com.aboelyan.sha.mshaweerak;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.icu.util.Calendar;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aboelyan.sha.mshaweerak.Booking.Bookings;
 import com.aboelyan.sha.mshaweerak.Clients.LogInUsers;
 import com.aboelyan.sha.mshaweerak.FCMH.FCMRegistrationService;
+import com.aboelyan.sha.mshaweerak.SendDataInSecond.MyService;
 
 public class Opening extends AppCompatActivity {
 
@@ -23,6 +29,10 @@ public class Opening extends AppCompatActivity {
     TextView textView;
     private BroadcastReceiver broadcastReceiver;
 
+    AlarmManager alarmManager;
+    PendingIntent pendingIntent;
+    Calendar calendar;
+    Intent alarm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +53,32 @@ public class Opening extends AppCompatActivity {
         }
 
         registerReceiver(broadcastReceiver,new IntentFilter(FCMInstanceIdService.TOKEN_BROADCAST));*/
+
+        final int SDK_INT = Build.VERSION.SDK_INT;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(System.currentTimeMillis());
+        }
+
+
+        alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        alarm = new Intent(this, MyService.class);
+        pendingIntent = PendingIntent.getService(this, 0, alarm, 0);
+
+        if (SDK_INT < Build.VERSION_CODES.KITKAT) {
+            alarmManager.set(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+10000, pendingIntent);
+            Log.d("lowerMF","hahah");
+        }
+        else if (Build.VERSION_CODES.KITKAT <= SDK_INT  && SDK_INT < Build.VERSION_CODES.M) {
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+10000,pendingIntent);
+            Log.d("kitkatMF","hahah");
+        }
+        else if (SDK_INT >= Build.VERSION_CODES.M) {
+            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+10000,pendingIntent);
+            Log.d("marshmallowMF","hahah");
+        }
+
         startService(new Intent(this,FCMRegistrationService.class));
 
         pref = getSharedPreferences("Login2.conf", Context.MODE_PRIVATE);

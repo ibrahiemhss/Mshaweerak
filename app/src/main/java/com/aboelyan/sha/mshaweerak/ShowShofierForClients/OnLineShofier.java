@@ -179,4 +179,6 @@ public class OnLineShofier  extends FragmentActivity implements
         AlertDialog alert = alertDialogBuilder.create();
         alert.show();
     }
+
+
 }

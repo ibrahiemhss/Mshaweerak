@@ -1,15 +1,26 @@
 package com.aboelyan.sha.mshaweerak.RecyclerViewClients;
 
+import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import com.aboelyan.sha.mshaweerak.GoogleMaps.GPSTracker;
 import com.aboelyan.sha.mshaweerak.R;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -19,6 +30,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,14 +44,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ListDesplayForClient extends AppCompatActivity  {
+public class ListDesplayForClient extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener,
+        LocationListener {
 
 
     RecyclerView Desplay_Shofires_For_Clients;
     private ClientAdapter adapter;
     private RequestQueue mRequestQueue;
     private List<ClientsModel> clientsModels ;
-    private ProgressDialog pd;
     SharedPreferences pref2,pref,prefsh;
     SharedPreferences.Editor editorsh,editor,editor2;
     private JsonArrayRequest jsonArrayRequest;
@@ -45,8 +61,19 @@ public class ListDesplayForClient extends AppCompatActivity  {
     RecyclerView.Adapter  recyclerViewadapter;
     private RequestQueue requestQueue;
     String urlListDesplayShForClient = "http://devsinai.com/mashaweer/ListDesplayForClient.php";
-    String car_id,cr_id;
+    String car_id,cr_id,LatitudeSend,LongtudeSend;
     ProgressBar progressBar;
+    private ProgressDialog pd;
+    String latitude,longitude;
+    SharedPreferences SharPlace;
+    SharedPreferences.Editor editorSharPlace;
+    private LocationRequest locationRequest;
+    double litude,longtude;
+    String comminglitude,comminglongtudee;
+    private int mInterval=0;
+    private final int CONNTIMEOUT=50000;
+    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10;
+    GoogleApiClient googleApiClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,23 +87,60 @@ public class ListDesplayForClient extends AppCompatActivity  {
         recyclerViewadapter = new ClientAdapter(clientsModels,this);
         Desplay_Shofires_For_Clients.setAdapter(recyclerViewadapter);
 
-
-
-        pref2 = getSharedPreferences("myPrefs", MODE_PRIVATE);
+        GPSTracker gps = new GPSTracker(this);
+        pd = new ProgressDialog(ListDesplayForClient.this);
+        pd.setMessage("Loading . . . ");
+            pref2 = getSharedPreferences("myPrefs",MODE_PRIVATE);
         cr_id=pref2.getString("car_id","car_id");
         editor2=pref2.edit();
 
-       // Toast.makeText(this, car_id+"A"+"           "+cr_id+"B", Toast.LENGTH_SHORT).show();
+
+        SharPlace = getSharedPreferences("Share.Places", Context.MODE_PRIVATE);
+
+
+        comminglitude =  SharPlace.getString("litude","");
+        comminglongtudee=  SharPlace.getString("longtude","");
+        editorSharPlace=SharPlace.edit();
+
+
+
+
+        Log.d(comminglitude,"comminglitudeeeee"+"   "+comminglongtudee+"comminglongtudeeeee");
+        Toast.makeText(this,comminglitude+" "+comminglongtudee,Toast.LENGTH_LONG).show();
+
+        // Toast.makeText(this, car_id+"A"+"           "+cr_id+"B", Toast.LENGTH_SHORT).show();
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar1);
 
+        if(gps.canGetLocation()){
 
+            latitude = String.valueOf(gps.getLatitude());
+            longitude = String.valueOf(gps.getLongitude());
+
+        }
+
+        else{
+
+            gps.showSettingsAlert();
+
+        }
 
         JSON_DATA_WEB_CALL();
 
     }
 
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) { // Please, use a final int instead of hardcoded int value
+            if (resultCode == RESULT_OK) {
+                comminglitude = (String) data.getExtras().getString("litude");
+                comminglongtudee = (String) data.getExtras().getString("longtude");
+
+            }
+        }
+    }
 
     public void JSON_DATA_WEB_CALL() {
         StringRequest stringRequest=new StringRequest(Request.Method.POST, urlListDesplayShForClient,
@@ -109,8 +173,8 @@ public class ListDesplayForClient extends AppCompatActivity  {
 
                 Map<String,String> params=new HashMap<String, String>();
                 params.put("car_id", cr_id);
-
-
+                params.put("latitude", String.valueOf(litude));
+                params.put("longitude", String.valueOf(longtude));
                 return params;
             }
         };
@@ -136,6 +200,11 @@ public class ListDesplayForClient extends AppCompatActivity  {
 
                 clientsModel2.setPHONE(json.getString("phone"));
                 clientsModel2.setMODEL_CAR(json.getString("model_car"));
+                clientsModel2.setLatitude(json.getString("latitude"));
+                clientsModel2.setLongitude(json.getString("longitude"));
+
+                clientsModel2.setDistance(json.getString("distance"));
+
 
                 // bookModels2.setUser_id(json.getString("user_id"));
 
@@ -154,6 +223,53 @@ public class ListDesplayForClient extends AppCompatActivity  {
 
 
 
+
+    }
+
+
+    @Override
+    public void onLocationChanged(Location location) {
+        litude=location.getLatitude();
+        longtude=location.getLongitude();
+        Log.v(String.valueOf(litude),"litudevvvvv");
+        Log.v(String.valueOf(longtude),"longtudevvvv");
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        locationRequest = LocationRequest.create();
+        locationRequest.setInterval(mInterval * 1000); // milliseconds
+        locationRequest.setFastestInterval(mInterval * 1000);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setSmallestDisplacement(MIN_DISTANCE_CHANGE_FOR_UPDATES);//dostance change
+        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION);
+        if (permissionCheck!= PackageManager.PERMISSION_DENIED)
+            LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, (com.google.android.gms.location.LocationListener) this);
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
 }

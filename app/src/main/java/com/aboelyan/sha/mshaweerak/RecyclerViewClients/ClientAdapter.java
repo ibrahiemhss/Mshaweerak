@@ -55,6 +55,7 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientAdapter.ClientHold
         holder.ShName.setText(SH.getNAME());
         holder.ShPhone.setText(SH.getPHONE());
         holder.model_car.setText(SH.getMODEL_CAR());
+        holder.distance.setText(SH.getDistance());
 
 
 
@@ -62,7 +63,7 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientAdapter.ClientHold
             @Override
             public boolean onLongClick(View v) {
 
-
+                String latitude,longitude;
 
                 final String name=holder.ShName.getText().toString();
                 final String phone=holder.ShPhone.getText().toString();
@@ -117,10 +118,12 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientAdapter.ClientHold
 
 
 
-            TextView ShPhone;
-            TextView ShName;
-            TextView model_car;
-        private ClientHolder(View itemView) {
+        TextView ShPhone;
+        TextView ShName;
+        TextView model_car;
+        TextView distance;
+
+       private ClientHolder(View itemView) {
             super(itemView);
 
 
@@ -128,10 +131,12 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientAdapter.ClientHold
 
             ShPhone = (TextView) itemView.findViewById(R.id.ShPhone);
             model_car = (TextView) itemView.findViewById(R.id.model_car);
+           distance=(TextView)itemView.findViewById(R.id.distance);
 
 
 
-        }
+
+       }
     }
 }
 
