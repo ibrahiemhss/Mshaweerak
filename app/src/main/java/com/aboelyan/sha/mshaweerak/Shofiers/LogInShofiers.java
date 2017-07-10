@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import com.aboelyan.sha.mshaweerak.Mysingletone;
 import com.aboelyan.sha.mshaweerak.R;
-import com.aboelyan.sha.mshaweerak.RecyclerVeiwShofiers.ListOfBookings;
+import com.aboelyan.sha.mshaweerak.RecyclerViewClients.ListDesplayForClient;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -95,12 +95,13 @@ public class LogInShofiers extends AppCompatActivity {
 
                                                                        Log.d(response,"response");
                                                                       editorsh.commit();
+                                                                       editorsh.apply();
                                                                        String code = jsonObject.getString("code");
                                                                        if (code.equals("login_failed")) {
                                                                            builder.setTitle("Login Error");
                                                                            desplayalert(jsonObject.getString("message"));
                                                                        } else {
-                                                                           Intent intent = new Intent(LogInShofiers.this, ListOfBookings.class);
+                                                                           Intent intent = new Intent(LogInShofiers.this, ListDesplayForClient.class);
                                                                            startActivity(intent);
                                                                            Toast.makeText(LogInShofiers.this,sh_id+" "+car_id+" "+name,Toast.LENGTH_LONG).show();
 

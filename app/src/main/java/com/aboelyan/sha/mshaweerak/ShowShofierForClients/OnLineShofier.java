@@ -1,8 +1,10 @@
 package com.aboelyan.sha.mshaweerak.ShowShofierForClients;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
@@ -12,12 +14,20 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aboelyan.sha.mshaweerak.R;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
@@ -29,6 +39,13 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class OnLineShofier  extends FragmentActivity implements
         OnMapReadyCallback,GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener {
 
@@ -39,6 +56,12 @@ public class OnLineShofier  extends FragmentActivity implements
     String Phone;
     private GoogleMap mMap;
     private GoogleApiClient googleApiClient;
+    String NameMape;
+    String sh_id;
+    double latitude,longitude;
+    SharedPreferences prefsh, SharPlace;
+    AppCompatButton login_Sh;
+    SharedPreferences.Editor editorsh, editorSharPlace;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +71,58 @@ public class OnLineShofier  extends FragmentActivity implements
                 .findFragmentById(R.id.map);
 
 
+        String LOCATION_URL = "http://devsinai.com/mashaweer/GoogleMaps/Location.php";
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,LOCATION_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(OnLineShofier.this, response, Toast.LENGTH_LONG).show();
+
+                        try {
+                            JSONObject  jsonRootObject = new JSONObject(response);
+
+                            //Get the instance of JSONArray that contains JSONObjects
+                            JSONArray jsonArray = jsonRootObject.optJSONArray("");
+
+                            //Iterate the jsonArray and print the info of JSONObjects
+                            for(int i=0; i < jsonArray.length(); i++){
+                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                                 latitude = jsonObject.optDouble("latitude");
+                                 longitude = jsonObject.optDouble("longitude");
+
+                            }
+
+                        } catch (JSONException e) {e.printStackTrace();}
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(OnLineShofier.this, error.toString(), Toast.LENGTH_LONG).show();
+                    }
+                })
+
+
+        {
+
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> map = new HashMap<>();
+
+                map.put("sh_id", sh_id);
+
+
+
+                return map;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
         mapFragment.getMapAsync(this);
 
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -66,6 +141,15 @@ public class OnLineShofier  extends FragmentActivity implements
                     .addApi(LocationServices.API)
                     .build();
         }
+        prefsh = getSharedPreferences("Loginsh.shofier", Context.MODE_PRIVATE);
+
+
+        prefsh = getSharedPreferences("Loginsh.shofier", Context.MODE_PRIVATE);
+
+            sh_id = prefsh.getString("sh_id", "sh_id");
+           // lat = prefsh.getString("latitude", "latitude");
+           // lang = prefsh.getString("longitude", "longitude");
+
 
         SHNAME = (TextView) findViewById(R.id.SHNAME);
         CARMODEL = (TextView) findViewById(R.id.CARMODEL);
@@ -76,6 +160,9 @@ public class OnLineShofier  extends FragmentActivity implements
         SHNAME.setText("الاسم         : " + bundle.getString("name"));
         CARMODEL.setText("الهاتف       : " + bundle.getString("phone"));
         PHONE.setText("موديل السياره : " + bundle.getString("model_car"));
+        NameMape=bundle.getString("name").trim();
+
+
 
         callShofier = (Button) findViewById(R.id.callShofier);
 
@@ -84,11 +171,14 @@ public class OnLineShofier  extends FragmentActivity implements
             @Override
             public void onClick(View v) {
                 dialContactPhone(Phone);
+              //  Toast.makeText(OnLineShofier.this,lat+"   "+lang+sh_id,Toast.LENGTH_LONG).show();
 
             }
         });
 
     }
+
+
 
     private void dialContactPhone(final String phoneNumber) {
         startActivity(new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phoneNumber, null)));
@@ -122,12 +212,10 @@ public class OnLineShofier  extends FragmentActivity implements
         } else {
             Location userCurrentLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
             if (userCurrentLocation != null) {
-                MarkerOptions currentUserLocation = new MarkerOptions();
-                LatLng currentUserLatLang = new LatLng(userCurrentLocation.getLatitude(), userCurrentLocation.getLongitude());
-                currentUserLocation.position(currentUserLatLang);
-                mMap.addMarker(currentUserLocation);
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentUserLatLang, 16));
-
+                LatLng sydney = new LatLng(latitude, longitude);
+                mMap.addMarker(new MarkerOptions().position(sydney).title(NameMape));
+                mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,7));
                 //=============================
 
                 // Starting locations retrieve task
@@ -179,6 +267,7 @@ public class OnLineShofier  extends FragmentActivity implements
         AlertDialog alert = alertDialogBuilder.create();
         alert.show();
     }
+
 
 
 }

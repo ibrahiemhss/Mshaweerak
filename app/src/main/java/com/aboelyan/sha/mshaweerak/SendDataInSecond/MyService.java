@@ -45,10 +45,10 @@ import java.util.concurrent.TimeUnit;
 public class MyService extends Service {
 
 
-private GoogleApiClient mGoogleApiClient;
-private Location mLocation;
-private LocationManager mLocationManager;
-private LocationRequest mLocationRequest;
+    private GoogleApiClient mGoogleApiClient;
+    private Location mLocation;
+    private LocationManager mLocationManager;
+    private LocationRequest mLocationRequest;
 
     public static final String BROADCAST_ACTION = "Hello World";
     private static final int TWO_MINUTES = 1000 * 60 * 2;
@@ -251,8 +251,8 @@ private LocationRequest mLocationRequest;
 
 
     public class MyLocationListener  implements GoogleApiClient.ConnectionCallbacks,
-    GoogleApiClient.OnConnectionFailedListener,
-    LocationListener{
+            GoogleApiClient.OnConnectionFailedListener,
+            LocationListener{
 
         private LocationRequest locationRequest;
         private GoogleApiClient googleApiClient;
@@ -264,15 +264,13 @@ private LocationRequest mLocationRequest;
 
         @Override
         public void onLocationChanged(Location location) {
-           // Log.v(Constants.BLL_LOG, "onLocationChanged position: " + location.getLatitude() + ", " + location.getLongitude() + " accuracy: " + location.getAccuracy());
-           // Log.v(Constants.BLL_LOG, "onLocationChanged position: location.getAccuracy()= "+location.getAccuracy());
+            // Log.v(Constants.BLL_LOG, "onLocationChanged position: " + location.getLatitude() + ", " + location.getLongitude() + " accuracy: " + location.getAccuracy());
+            // Log.v(Constants.BLL_LOG, "onLocationChanged position: location.getAccuracy()= "+location.getAccuracy());
             litude=location.getLatitude();
             longtude=location.getLongitude();
             Log.v(String.valueOf(litude),"bnbnbnbn");
             Log.v(String.valueOf(longtude),"fgghhghghg");
-            SharPlace = getSharedPreferences("Share.Places", Context.MODE_PRIVATE);
-            editorSharPlace.putFloat("litude", (float)(litude));
-            editorSharPlace.putFloat("longtude", (float) longtude);
+
 
             editorSharPlace.commit();
 
@@ -305,7 +303,7 @@ private LocationRequest mLocationRequest;
                 LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, (com.google.android.gms.location.LocationListener) this);
 
 
-    }
+        }
 
         @Override
         public void onConnectionSuspended(int i) {
@@ -317,22 +315,22 @@ private LocationRequest mLocationRequest;
 
         }
     }
-        public void onProviderDisabled(String provider)
-        {
-            Toast.makeText( getApplicationContext(), "Gps Disabled", Toast.LENGTH_SHORT ).show();
-        }
+    public void onProviderDisabled(String provider)
+    {
+        Toast.makeText( getApplicationContext(), "Gps Disabled", Toast.LENGTH_SHORT ).show();
+    }
 
 
-        public void onProviderEnabled(String provider)
-        {
-            Toast.makeText( getApplicationContext(), "Gps Enabled", Toast.LENGTH_SHORT).show();
-        }
+    public void onProviderEnabled(String provider)
+    {
+        Toast.makeText( getApplicationContext(), "Gps Enabled", Toast.LENGTH_SHORT).show();
+    }
 
 
-        public void onStatusChanged(String provider, int status, Bundle extras)
-        {
+    public void onStatusChanged(String provider, int status, Bundle extras)
+    {
 
-        }
+    }
 
 
 }
