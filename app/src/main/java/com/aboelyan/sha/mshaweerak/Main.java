@@ -26,7 +26,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aboelyan.sha.mshaweerak.Fragments.FragmentLog_In_Sh;
-import com.aboelyan.sha.mshaweerak.Fragments.Fragment_Booking;
 import com.aboelyan.sha.mshaweerak.Nav.DataModel;
 import com.aboelyan.sha.mshaweerak.Nav.DrawerItemCustomAdapter;
 import com.android.volley.AuthFailureError;
@@ -258,9 +257,15 @@ public class Main extends AppCompatActivity {
 
         Fragment fragment = null;
 
+        Context context;
         switch (position) {
             case 0:
-                fragment = new FragmentLog_In_Sh();
+                Intent intent = new Intent(Main.this, FragmentLog_In_Sh.class);
+                intent .putExtra("openF2",true);
+                overridePendingTransition(0, 0);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                finish();
+                startActivity(intent);
                 break;
             case 1:
 

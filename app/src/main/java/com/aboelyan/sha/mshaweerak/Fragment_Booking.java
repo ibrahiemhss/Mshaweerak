@@ -1,4 +1,4 @@
-package com.aboelyan.sha.mshaweerak.Fragments;
+package com.aboelyan.sha.mshaweerak;
 
 import android.app.AlertDialog;
 import android.content.Context;
