@@ -38,9 +38,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.TimerTask;
 
 public class MyService extends Service {
 
@@ -78,33 +76,25 @@ public class MyService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-
-        ScheduledExecutorService executor =
-                Executors.newSingleThreadScheduledExecutor();
-
-        Runnable periodicTask = new Runnable() {
+        intent = new Intent(BROADCAST_ACTION);
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
             public void run() {
-                // Invoke method(s) to do the work
-                sendRequestToServer();
-
-
-
+                sendRequestToServer();   //Your code here
             }
-        };
-        executor.scheduleAtFixedRate(periodicTask, 0, 1, TimeUnit.MINUTES);
-
+        }, 0,1000);//5 Minutes
     }
 
     private void sendRequestToServer() {
 
-        String UBDATE_LOCATION_URL = "http://devsinai.com/mashaweer/GoogleMaps/UbdateLocation.php";
+        String UBDATE_LOCATION_URL="http://devsinai.com/mashaweer/GoogleMaps/UbdateLocation.php";
 
         prefsh = getSharedPreferences("Loginsh.shofier", Context.MODE_PRIVATE);
-        final String sh_id = prefsh.getString("sh_id", "sh_id");
+        final String sh_id = prefsh.getString("username","username");
 
-        Log.i(sh_id, "loacattio_user_id");
-        Log.i(String.valueOf(litude), "litudeeeeeeeeee");
-        Log.i(String.valueOf(longtude), "longtudeeeeeeee");
+        Log.i(sh_id,"loacattio_user_id");
+        Log.i(String.valueOf(litude),"litudeeeeeeeeee");
+        Log.i(String.valueOf(longtude),"longtudeeeeeeee");
 
         editorsh = prefsh.edit();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, UBDATE_LOCATION_URL,
@@ -123,15 +113,14 @@ public class MyService extends Service {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
+                error.printStackTrace();}
         }
         ) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("sh_id", sh_id);
+                params.put("username", sh_id);
                 params.put("latitude", String.valueOf(litude));
                 params.put("longitude", String.valueOf(longtude));
 

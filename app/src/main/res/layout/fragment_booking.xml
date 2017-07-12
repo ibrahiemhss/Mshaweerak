@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FF5722"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    tools:context="com.aboelyan.sha.mshaweerak.Booking.Bookings"
+    tools:context="com.aboelyan.sha.mshaweerak.Fragments.Fragment_Booking"
     tools:ignore="ExtraText">
 
 
@@ -50,7 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
-            android:background="@drawable/whitebackground">
+            android:background="@drawable/orang_bord">
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/face"
@@ -69,7 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
-            android:background="@drawable/whitebackground">
+            android:background="@drawable/orang_bord">
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/phone"
@@ -88,7 +89,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
-            android:background="@drawable/whitebackground">
+            android:background="@drawable/orang_bord">
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/Time"
@@ -107,7 +108,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
-            android:background="@drawable/whitebackground"
+            android:background="@drawable/orang_bord"
             android:text="اختر نوع السياره" />
 
 
@@ -124,7 +125,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
             android:layout_marginTop="24dp"
-            android:background="@drawable/light_green_background"
+            android:background="@drawable/orang_black"
             android:padding="12dp"
             android:text="احجز" />
 

@@ -2,7 +2,6 @@ package com.aboelyan.sha.mshaweerak.Shofiers;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -82,7 +81,7 @@ public class RegisterShofiers extends AppCompatActivity implements AdapterView.O
         link_loginSh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(RegisterShofiers.this, LogInShofiers.class));
+               // startActivity(new Intent(RegisterShofiers.this, LogInShofiers.class));
             }
         });
         btn_signupSh.setOnClickListener(new View.OnClickListener() {

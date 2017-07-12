@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
-            android:background="@drawable/whitebackground">
+            android:background="@drawable/orang_bord">
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/reg_usernam"
@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
-            android:background="@drawable/whitebackground">
+            android:background="@drawable/orang_bord">
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/phone"
@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
-            android:background="@drawable/whitebackground">
+            android:background="@drawable/orang_bord">
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/reg_password"
@@ -80,7 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
-            android:background="@drawable/whitebackground">
+            android:background="@drawable/orang_bord">
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/reg_confirmpass"

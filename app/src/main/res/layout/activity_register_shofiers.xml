@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
-            android:background="@drawable/whitebackground">
+            android:background="@drawable/orang_bord">
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/reg_usernamSh"
@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
-            android:background="@drawable/whitebackground">
+            android:background="@drawable/orang_bord">
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/ModelCarSh"
@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
-            android:background="@drawable/whitebackground">
+            android:background="@drawable/orang_bord">
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/phoneSh"
@@ -78,7 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
-            android:background="@drawable/whitebackground">
+            android:background="@drawable/orang_bord">
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/reg_passwordSh"
@@ -96,7 +96,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
-            android:background="@drawable/whitebackground">
+            android:background="@drawable/orang_bord">
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/reg_confirmpassSh"
@@ -114,7 +114,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
-            android:background="@drawable/whitebackground"
+            android:background="@drawable/orang_bord"
             android:text="اختر نوع السياره" />
 
 

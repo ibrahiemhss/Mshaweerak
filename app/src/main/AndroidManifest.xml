@@ -22,7 +22,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Opening">
+        <activity android:name=".Main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,7 +32,6 @@
         <activity android:name=".UseRegestraion" />
         <activity android:name=".Booking.Bookings" />
         <activity android:name=".Shofiers.RegisterShofiers" />
-        <activity android:name=".Shofiers.LogInShofiers" />
         <activity android:name=".RecyclerVeiwShofiers.ListOfBookings" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -59,7 +58,7 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".Clients.LogInUsers" />
+
         <activity android:name=".RecyclerViewClients.ListDesplayForClient" />
         <activity android:name=".ShowShofierForClients.OnLineShofier" />
         <activity android:name=".ShowShoToClients.ShofDetails"></activity>
