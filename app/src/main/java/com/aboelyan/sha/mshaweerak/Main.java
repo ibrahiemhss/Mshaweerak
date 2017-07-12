@@ -254,26 +254,18 @@ public class Main extends AppCompatActivity {
     }
 
     private void selectItem(int position) {
-
         Fragment fragment = null;
 
-        Context context;
         switch (position) {
             case 0:
-                Intent intent = new Intent(Main.this, FragmentLog_In_Sh.class);
-                intent .putExtra("openF2",true);
-                overridePendingTransition(0, 0);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                finish();
-                startActivity(intent);
+                fragment = new FragmentLog_In_Sh();
                 break;
             case 1:
-
+               // fragment = new FixturesFragment();
                 break;
-           /*
             case 2:
-                fragment = new TableFragment();
-                break;*/
+            //    fragment = new TableFragment();
+                break;
 
             default:
                 break;
