@@ -15,9 +15,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <include
-                android:id="@+id/toolbar"
-                layout="@layout/toolbar" />
         </LinearLayout>
 
 
@@ -159,13 +156,10 @@
     </LinearLayout>
 
     <ListView
-        android:id="@+id/left_drawer"
-        android:layout_width="150dp"
+        android:id="@+id/navList"
+        android:layout_width="200dp"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:background="#FFFFFF"
-        android:choiceMode="singleChoice"
-        android:divider="@android:color/darker_gray"
-        android:dividerHeight="1dp" />
+        android:layout_gravity="left|start"
+        android:background="#ffeeeeee"/>
 
 </android.support.v4.widget.DrawerLayout>

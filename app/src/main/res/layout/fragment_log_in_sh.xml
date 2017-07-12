@@ -13,7 +13,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.aboelyan.sha.mshaweerak.Fragments.FragmentLog_In_Sh">
+    tools:context="com.aboelyan.sha.mshaweerak.Fragments.Log_In_Sh_Dialog">
 
     <LinearLayout
         android:id="@+id/ll1"

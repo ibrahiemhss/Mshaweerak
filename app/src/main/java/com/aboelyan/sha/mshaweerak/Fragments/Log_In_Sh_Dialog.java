@@ -1,16 +1,16 @@
 package com.aboelyan.sha.mshaweerak.Fragments;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -38,7 +38,7 @@ import java.util.Map;
  * Created by Administrator on 12/07/2017.
  */
 
-public class FragmentLog_In_Sh extends Fragment {
+public class Log_In_Sh_Dialog extends Dialog {
     private final static String LOGIN_URL = "http://devsinai.com/mashaweer/logIn_Shofier.php";
     EditText username_Sh;
     EditText password_Sh;
@@ -50,20 +50,31 @@ public class FragmentLog_In_Sh extends Fragment {
     SharedPreferences prefsh, NatficationName;
     Button login_Sh;
     SharedPreferences.Editor editorsh, editorNatficationName;
-
-
-
+    public Context c;
+    public Log_In_Sh_Dialog(Context a) {
+        super(a);
+        // TODO Auto-generated constructor stub
+        this.c = a;
+    }
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.fragment_log_in_sh);
 
-        View rootView = inflater.inflate(R.layout.fragment_log_in_sh, container, false);
+        WindowManager.LayoutParams params = getWindow().getAttributes();
+        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        getWindow().setAttributes((WindowManager.LayoutParams) params);
 
-        login_Sh= (Button) rootView.findViewById(R.id.login_Sh);
-        username_Sh = (EditText) rootView.findViewById(R.id.username_Sh);
-        password_Sh = (EditText) rootView.findViewById(R.id.password_Sh);
+
+
+
+        login_Sh= (Button) findViewById(R.id.login_Sh);
+        username_Sh = (EditText) findViewById(R.id.username_Sh);
+        password_Sh = (EditText) findViewById(R.id.password_Sh);
 
       //  register_Sh = (TextView) rootView.findViewById(R.id.register_Sh);
-        prefsh = getActivity().getSharedPreferences("Loginsh.shofier", Context.MODE_PRIVATE);
+        prefsh = c.getSharedPreferences("Loginsh.shofier", Context.MODE_PRIVATE);
         sh_id = prefsh.getString("sh_id", "sh_id");
         name = prefsh.getString("username", "username");
         car_id = prefsh.getString("car_id", "car_id");
@@ -82,7 +93,7 @@ public class FragmentLog_In_Sh extends Fragment {
         );
 
 
-        return rootView;
+
     }
 
     private void LogInSh() {
@@ -118,8 +129,8 @@ public class FragmentLog_In_Sh extends Fragment {
                                     desplayalert(jsonObject.getString("message"));
                                 } else {
                                     Intent intent = new Intent(getContext(), ListDesplayForClient.class);
-                                    startActivity(intent);
-                                    Toast.makeText(getActivity(), sh_id + " " + car_id + " " + name, Toast.LENGTH_LONG).show();
+                                    c.startActivity(intent);
+                                    Toast.makeText(Log_In_Sh_Dialog.this.c, sh_id + " " + car_id + " " + name, Toast.LENGTH_LONG).show();
 
                                 }
                             } catch (JSONException e) {
@@ -129,7 +140,7 @@ public class FragmentLog_In_Sh extends Fragment {
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(getActivity(), "Error", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Log_In_Sh_Dialog.this.c, "Error", Toast.LENGTH_LONG).show();
                     VolleyLog.e("Error: ", error.getMessage());
                     error.printStackTrace();
                 }
@@ -146,7 +157,7 @@ public class FragmentLog_In_Sh extends Fragment {
                     return params;
                 }
             };
-            Mysingletone.getInstance(getActivity()).addToRequestque(stringRequest);
+            Mysingletone.getInstance(Log_In_Sh_Dialog.this.c).addToRequestque(stringRequest);
         }
 
     }

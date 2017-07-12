@@ -7,9 +7,8 @@
     <string name="invalid_password">Password is too short</string>
     <string name="incorrect_password">Password is incorrect</string>
     <string name="field_required">This field is required</string>
-    <string name="openDrawer">open</string>
-    <string name="closeDrawer">close</string>
-
+    <string name="drawer_open">open</string>
+    <string name="drawer_close">close</string>
 
     <string-array name="navigation_drawer_items_array">
         <item>Connect</item>
